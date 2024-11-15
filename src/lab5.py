@@ -1,28 +1,32 @@
+# лабіринт пошук найкоротшого шляху
 from collections import deque
 
 
 def read_input(file_path):
-    with open(file_path, 'r') as file:
+    with open(file_path, 'r', encoding='utf-8') as file:
         start = tuple(map(int, file.readline().strip().split(',')))
         end = tuple(map(int, file.readline().strip().split(',')))
         dimensions = tuple(map(int, file.readline().strip().split(',')))
+
         grid = []
         for _ in range(dimensions[0]):
             row = list(map(int, file.readline().strip().replace('[', '').replace(']', '').split()))
             grid.append(row)
+
     return start, end, grid
 
 
+# Знаходження найкоротшого шляху від початку до кінця
 def bfs_shortest_path(grid, start, end):
     rows, cols = len(grid), len(grid[0])
     queue = deque([(start[0], start[1], 0)])  # (x, y, distance)
     visited = set()
     visited.add(start)
-
-    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # Up, Down, Left, Right
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
     while queue:
         x, y, dist = queue.popleft()
+
         if (x, y) == end:
             return dist
 
@@ -31,7 +35,8 @@ def bfs_shortest_path(grid, start, end):
             if 0 <= nx < rows and 0 <= ny < cols and (nx, ny) not in visited and grid[nx][ny] == 1:
                 visited.add((nx, ny))
                 queue.append((nx, ny, dist + 1))
-    return -1  # If no path is found
+
+    return -1
 
 
 def write_output(file_path, result):
@@ -40,9 +45,12 @@ def write_output(file_path, result):
 
 
 def main():
-    start, end, grid = read_input('input1.txt')
+    input_path = 'input.txt'
+    output_path = 'output.txt'
+
+    start, end, grid = read_input(input_path)
     result = bfs_shortest_path(grid, start, end)
-    write_output('output1.txt', result)
+    write_output(output_path, result)
 
 
 if __name__ == "__main__":

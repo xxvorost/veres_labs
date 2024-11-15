@@ -1,3 +1,4 @@
+# Лабка черги з пріоритетами
 class Node:
     def __init__(self, value, priority):
         self.value = value
@@ -6,6 +7,7 @@ class Node:
         self.next = None
 
 
+# Черга з пріоритетами на основі двозв'язного списку
 class PriorityQueue:
     def __init__(self):
         self.head = None
